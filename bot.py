@@ -129,9 +129,9 @@ async def cmd_debug(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     lines.append("\n*Schritt 3: Google Calendar Verbindung*")
     service = None
     try:
-        from calendar_client import _get_service, CALENDAR_ID
+        from calendar_client import _get_service, _get_calendar_id
         service = _get_service()
-        cal = service.calendars().get(calendarId=CALENDAR_ID).execute()
+        cal = service.calendars().get(calendarId=_get_calendar_id()).execute()
         lines.append(f"✅ Kalender gefunden!")
         lines.append(f"   Name: *{cal.get('summary')}*")
         lines.append(f"   ID: `{cal.get('id')}`")

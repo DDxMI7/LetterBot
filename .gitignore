@@ -52,8 +52,8 @@ coverage.xml
 cover/
 
 # Secrets
-.json
-.pickle
+*.json
+*.pickle
 
 # Translations
 *.mo

@@ -25,11 +25,14 @@ from googleapiclient.errors import HttpError
 
 log = logging.getLogger(__name__)
 
-SCOPES = ["https://www.googleapis.com/auth/calendar"]
+SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 
 CREDENTIALS_FILE = os.getenv("GOOGLE_CREDENTIALS_FILE", "credentials.json")
 TOKEN_FILE       = os.getenv("GOOGLE_TOKEN_FILE",       "token.pickle")
-CALENDAR_ID      = os.getenv("GOOGLE_CALENDAR_ID",      "primary")
+def _get_calendar_id() -> str:
+    cal_id = os.getenv("GOOGLE_CALENDAR_ID", "primary")
+    log.debug("Nutze Kalender-ID: %s", cal_id)
+    return cal_id
 
 # Priorität → Kalenderfarbe (Google Calendar Farbcodes 1-11)
 PRIORITY_COLOR = {
@@ -151,7 +154,7 @@ def create_calendar_event(event: dict) -> str | None:
 
     try:
         result = service.events().insert(
-            calendarId=CALENDAR_ID,
+            calendarId=_get_calendar_id(),
             body=body,
         ).execute()
 
